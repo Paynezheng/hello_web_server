@@ -71,7 +71,7 @@ struct Worker {
 
 impl Worker {
     //私有
-    fn new(id: usize, receiver: Arc<Mutex<mpsc::Receiver<Job>>>) -> Worker {
+    fn new(id: usize, receiver: Arc<Mutex<mpsc::Receiver<Message>>>) -> Worker {
         let thread = thread::spawn(move ||
             loop {
                 let message = receiver.lock().unwrap().recv().unwrap();
