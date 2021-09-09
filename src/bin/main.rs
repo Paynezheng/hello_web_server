@@ -1,4 +1,5 @@
-use hello_web_server::ThreadPool;
+use hello_web_server::threadpool::ThreadPool;
+use hello_web_server::log::Info;
 use std::fs;
 use std::io::prelude::*;
 use std::net::TcpListener;
@@ -7,6 +8,7 @@ use std::thread;
 use std::time::Duration;
 
 fn main() {
+    Info::hello_info().unwrap();
     let listener = TcpListener::bind("0.0.0.0:7878").unwrap();
     let pool = ThreadPool::new(4);
 
@@ -23,7 +25,7 @@ fn main() {
 
 fn handle_connection(mut stream: TcpStream) {
     let mut buffer = [0; 1024];
-    // unwrap: 防止panic
+
     stream.read(&mut buffer).unwrap();
 
     let get = b"GET / HTTP/1.1\r\n";
